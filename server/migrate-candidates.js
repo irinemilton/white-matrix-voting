@@ -4,30 +4,47 @@ async function migrateCandidates() {
   try {
     console.log('Starting candidates migration...');
     
-    // Add linkedin_url column if it doesn't exist
+    // 1. Ensure the column exists
     await db.query(`
       ALTER TABLE candidates ADD COLUMN IF NOT EXISTS linkedin_url VARCHAR(255);
     `);
-    
     console.log('LinkedIn URL column added/verified');
+
+    // 2. SPECIFIC FIX: Force update with the REAL, FULL URL
+    // We include https:// here so it works immediately.
+    const realUrl = "https://www.linkedin.com/in/mariya-rose-rimson-3ba057356/";
+    await db.query(
+      "UPDATE candidates SET linkedin_url = $1 WHERE name = $2",
+      [realUrl, "Maria Rose Rimson"]
+    );
+    console.log(`Verified REAL URL updated for Maria Rose Rimson: ${realUrl}`);
+
+    // 3. PROTOCOL CLEANUP: Ensure EVERY link in the DB starts with https://
+    // This handles any other candidates that might have broken links
+    const brokenLinks = await db.query(`
+      SELECT id, name, linkedin_url FROM candidates 
+      WHERE linkedin_url IS NOT NULL 
+      AND linkedin_url NOT LIKE 'http%'
+    `);
+
+    for (const row of brokenLinks.rows) {
+      const fixedUrl = `https://${row.linkedin_url.replace(/^(https?:\/\/)?(www\.)?/, 'www.')}`;
+      await db.query('UPDATE candidates SET linkedin_url = $1 WHERE id = $2', [fixedUrl, row.id]);
+      console.log(`Fixed protocol for ${row.name}: ${fixedUrl}`);
+    }
+
+    // 4. NULL FILLER: Generate links for candidates who have none
+    const nullCandidates = await db.query('SELECT id, name FROM candidates WHERE linkedin_url IS NULL');
     
-    // Update existing candidates with LinkedIn URLs if they don't have them
-    const candidates = await db.query('SELECT id, name FROM candidates WHERE linkedin_url IS NULL');
-    
-    if (candidates.rows.length > 0) {
-      console.log(`Found ${candidates.rows.length} candidates without LinkedIn URLs`);
-      
-      for (const candidate of candidates.rows) {
-        // Generate a placeholder LinkedIn URL based on candidate name
-        const linkedinUrl = `https://www.linkedin.com/in/${candidate.name.toLowerCase().replace(/\s+/g, '-')}`;
+    if (nullCandidates.rows.length > 0) {
+      for (const candidate of nullCandidates.rows) {
+        const generatedUrl = `https://www.linkedin.com/in/${candidate.name.toLowerCase().replace(/\s+/g, '-')}`;
         await db.query(
           'UPDATE candidates SET linkedin_url = $1 WHERE id = $2',
-          [linkedinUrl, candidate.id]
+          [generatedUrl, candidate.id]
         );
-        console.log(`Updated ${candidate.name} with LinkedIn URL: ${linkedinUrl}`);
+        console.log(`Generated placeholder URL for ${candidate.name}`);
       }
-    } else {
-      console.log('All candidates already have LinkedIn URLs');
     }
     
     console.log('Migration complete!');
@@ -39,4 +56,3 @@ async function migrateCandidates() {
 }
 
 migrateCandidates();
-
