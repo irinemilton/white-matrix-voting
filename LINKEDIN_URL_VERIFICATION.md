@@ -106,3 +106,4 @@ The verification happens automatically when:
 
 No additional configuration needed - it works out of the box!
 
+
