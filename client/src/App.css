@@ -128,30 +128,147 @@ body {
 .candidate-card {
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
-  padding: 1.5rem;
-  transition: all 0.2s ease;
+  border-radius: 0.75rem;
+  padding: 0;
+  transition: all 0.3s ease;
   position: relative;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .candidate-card:hover {
   border-color: #cbd5e1;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
 }
 
-.candidate-card h2 {
+.candidate-header {
+  padding: 1.5rem 1.5rem 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%);
+}
+
+.candidate-photo-container {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  border: 4px solid #ffffff;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.candidate-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.candidate-info {
+  width: 100%;
+}
+
+.candidate-name {
   color: #0f172a;
-  font-size: 1.125rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.2;
+}
+
+.candidate-tagline {
+  color: #64748b;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin: 0 0 0.25rem 0;
+  font-style: italic;
+}
+
+.candidate-experience {
+  color: #94a3b8;
+  font-size: 0.75rem;
+  margin: 0;
+}
+
+.candidate-body {
+  padding: 1rem 1.5rem;
+  flex-grow: 1;
 }
 
 .candidate-card .bio {
-  color: #64748b;
+  color: #475569;
+  font-size: 0.9375rem;
+  margin-bottom: 1.25rem;
+  line-height: 1.6;
+}
+
+.candidate-key-points {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.candidate-key-points h4 {
+  color: #0f172a;
   font-size: 0.875rem;
-  margin-bottom: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.candidate-key-points ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.candidate-key-points li {
+  color: #475569;
+  font-size: 0.875rem;
+  padding: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
   line-height: 1.5;
+}
+
+.candidate-key-points li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #10b981;
+  font-weight: 600;
+}
+
+.candidate-linkedin {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.linkedin-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+}
+
+.linkedin-link:hover {
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.candidate-footer {
+  padding: 1rem 1.5rem 1.5rem 1.5rem;
+  border-top: 1px solid #f1f5f9;
+  background-color: #fafbfc;
 }
 
 .votes {

@@ -1,15 +1,15 @@
 import React from 'react';
 import '../../App.css';
+import { API_BASE_URL } from '../../config';
 
 export default function Login() {
-  
   // Directly triggers the Passport.js flow on your Node server
   const handleGoogleLogin = () => {
-    window.location.href = 'http://localhost:5000/auth/google';
+    window.location.href = `${API_BASE_URL}/auth/google`;
   };
 
   const handleLinkedinLogin = () => {
-    window.location.href = 'http://localhost:5000/auth/linkedin';
+    window.location.href = `${API_BASE_URL}/auth/linkedin`;
   };
 
   return (

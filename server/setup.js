@@ -27,8 +27,14 @@ async function setupDatabase() {
       CREATE TABLE IF NOT EXISTS candidates (
         id SERIAL PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
-        description TEXT
+        description TEXT,
+        linkedin_url VARCHAR(255)
       );
+    `);
+
+    // Add linkedin_url column if it doesn't exist
+    await db.query(`
+      ALTER TABLE candidates ADD COLUMN IF NOT EXISTS linkedin_url VARCHAR(255);
     `);
 
     // Create votes table
@@ -44,8 +50,10 @@ async function setupDatabase() {
     // Insert sample candidates if not exist
     const candidates = await db.query('SELECT COUNT(*) FROM candidates');
     if (parseInt(candidates.rows[0].count) === 0) {
-      await db.query("INSERT INTO candidates (name, description) VALUES ('Candidate A', 'Description for A')");
-      await db.query("INSERT INTO candidates (name, description) VALUES ('Candidate B', 'Description for B')");
+      await db.query(`INSERT INTO candidates (name, description, linkedin_url) 
+        VALUES ('Candidate A', 'Experienced leader with a vision for innovation and growth.', 'https://www.linkedin.com/in/candidate-a')`);
+      await db.query(`INSERT INTO candidates (name, description, linkedin_url) 
+        VALUES ('Candidate B', 'Dedicated professional committed to excellence and community impact.', 'https://www.linkedin.com/in/candidate-b')`);
     }
 
     console.log('Database setup complete');

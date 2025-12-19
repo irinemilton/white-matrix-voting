@@ -1,13 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../App.css';
+import { API_BASE_URL } from '../config';
 
 export default function Navbar() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
     // Tell the backend to destroy the session
-    window.location.href = 'http://localhost:5000/auth/logout';
+    window.location.href = `${API_BASE_URL}/auth/logout`;
   };
 
   return (

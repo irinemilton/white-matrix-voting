@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node server.js",
     "setup": "node setup.js",
+    "migrate": "node migrate-candidates.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

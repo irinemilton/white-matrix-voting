@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../Navbar';
 import '../../App.css';
+import { API_BASE_URL } from '../../config';
 
 export default function Results() {
   const [results, setResults] = useState([]);
   const [voters, setVoters] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/results', { credentials: 'include' })
+    fetch(`${API_BASE_URL}/api/results`, { credentials: 'include' })
       .then((res) => res.json())
       .then((data) => setResults(data))
       .catch((err) => console.error("Error fetching results:", err));
 
-    fetch('http://localhost:5000/api/voters', { credentials: 'include' })
+    fetch(`${API_BASE_URL}/api/voters`, { credentials: 'include' })
       .then((res) => res.json())
       .then((data) => setVoters(data))
       .catch((err) => console.error("Error fetching voters:", err));
