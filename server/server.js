@@ -144,33 +144,45 @@ app.get('/api/results', async (req, res) => {
 
 // --- PROFILE UPDATE LOGIC ---
 app.post('/api/update-linkedin-url', async (req, res) => {
-    if (!req.isAuthenticated()) return res.status(401).json({ error: 'Please log in' });
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({ error: 'Please log in' });
+  }
 
-    try {
-        const { linkedinUrl } = req.body;
-        if (!linkedinUrl || !linkedinUrl.trim()) return res.status(400).json({ error: 'LinkedIn URL required' });
+  try {
+    const { linkedinUrl } = req.body;
 
-        const linkedinRegex = /^https?:\/\/(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+\/?(\?.*)?$/;
-        if (!linkedinRegex.test(linkedinUrl.trim())) {
-            return res.status(400).json({ error: 'Invalid LinkedIn URL format' });
-        }
-
-        const verification = await verifyLinkedInUrl(linkedinUrl.trim());
-        if (!verification.isValid) return res.status(400).json({ error: verification.error });
-
-        await db.query('UPDATE users SET linkedin_profile_url = $1 WHERE id = $2', [linkedinUrl.trim(), req.user.id]);
-
-        const updatedUserResult = await db.query('SELECT * FROM users WHERE id = $1', [req.user.id]);
-        const updatedUser = updatedUserResult.rows[0];
-        
-        // Re-log user to update session
-        req.login(updatedUser, (err) => {
-            if (err) return res.status(500).json({ error: 'Session update failed' });
-            req.session.save(() => res.json({ message: 'Profile updated successfully', user: updatedUser }));
-        });
-    } catch (err) {
-        res.status(500).json({ error: 'Server error' });
+    // Call the refactored verifier
+    const verification = await verifyLinkedInUrl(linkedinUrl);
+    
+    if (!verification.isValid) {
+      return res.status(400).json({ error: verification.error });
     }
+
+    // Use the sanitized URL (cleanUrl) returned by the verifier
+    const finalUrl = verification.url; 
+
+    console.log('Updating database for user:', req.user.id, 'with URL:', finalUrl);
+
+    // Update the database
+    await db.query(
+      'UPDATE users SET linkedin_profile_url = $1 WHERE id = $2',
+      [finalUrl, req.user.id]
+    );
+
+    // Refresh user data in current session
+    const updatedUserResult = await db.query('SELECT * FROM users WHERE id = $1', [req.user.id]);
+    const updatedUser = updatedUserResult.rows[0];
+    
+    Object.assign(req.user, updatedUser);
+    
+    req.login(updatedUser, (err) => {
+      if (err) return res.status(500).json({ error: 'Session refresh failed' });
+      req.session.save(() => res.json({ message: 'Profile updated successfully', user: updatedUser }));
+    });
+  } catch (err) {
+    console.error('Update LinkedIn URL error:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
 });
 
 app.get('/auth/logout', (req, res, next) => {
