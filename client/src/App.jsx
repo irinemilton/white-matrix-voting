@@ -27,7 +27,14 @@ const ProtectedRoute = ({ children }) => {
   }, []);
 
   if (isAuthenticated === null) {
-    return <div>Loading...</div>; // Or a spinner
+    return (
+      <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh'}}>
+        <div className="loading">
+          <div className="spinner"></div>
+          <span>Loading...</span>
+        </div>
+      </div>
+    );
   }
 
   if (!isAuthenticated) {

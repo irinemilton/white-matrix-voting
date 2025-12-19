@@ -12,11 +12,15 @@ export default function Navbar() {
 
   return (
     <nav className="navbar">
-      <div className="nav-brand" onClick={() => navigate('/voting')}>White Matrix</div>
-      <div className="nav-links">
-        <button onClick={() => navigate('/voting')} className="nav-item">Vote</button>
-        <button onClick={() => navigate('/results')} className="nav-item">Results</button>
-        <button onClick={handleLogout} className="btn-logout">Logout</button>
+      <div className="navbar-content">
+        <div className="navbar-brand" onClick={() => navigate('/voting')} style={{cursor: 'pointer'}}>
+          One Vote App
+        </div>
+        <div className="navbar-links">
+          <button onClick={() => navigate('/voting')} className="navbar-link">Vote</button>
+          <button onClick={() => navigate('/results')} className="navbar-link">Results</button>
+          <button onClick={handleLogout} className="btn btn-secondary">Logout</button>
+        </div>
       </div>
     </nav>
   );

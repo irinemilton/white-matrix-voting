@@ -16,7 +16,7 @@ export default function Login() {
     <div className="auth-container">
       <div className="auth-card">
         <header className="auth-header">
-          <h1 className="auth-title">White Matrix Voting</h1>
+          <h1 className="auth-title">One Vote App</h1>
           <p className="auth-subtitle">Secure Candidate Support Portal</p>
         </header>
         
@@ -43,7 +43,7 @@ export default function Login() {
         </div>
 
         <footer className="auth-footer">
-          <p>Authenticating via secure OAuth 2.0 protocols.</p>
+          <p>Your Trusted Voting Platform.</p>
           <div className="footer-links">
             <a href="/terms">Terms of Service</a>
             <span className="separator">•</span>

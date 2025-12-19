@@ -38,27 +38,52 @@ export default function Voting() {
   };
 
   return (
-    <div className="container">
+    <div>
       <Navbar />
-      <h1 className="title">Cast Your Support</h1>
-      {message && <div className="alert">{message}</div>}
-      
-      <div className="candidate-grid">
-        {candidates.map((person) => (
-          <div key={person.id} className="candidate-card">
-            <h2>{person.name}</h2>
-            <p className="bio">{person.description}</p>
-            <button 
-              className="btn btn-vote" 
-              onClick={() => handleVote(person.id)}
-            >
-              Vote for {person.name}
-            </button>
+      <div className="container">
+        <h1 className="title">Cast Your Support</h1>
+        {message && (
+          <div className={`alert ${message.includes('✅') ? 'alert-success' : 'alert-error'}`}>
+            {message}
           </div>
-        ))}
-      </div>
-      <div style={{marginTop: '20px'}}>
-        <a href="/results" className="link">View Live Results</a>
+        )}
+
+        <div className="dashboard">
+          <div className="section">
+            <div className="section-header">
+              <h2 className="section-title">Available Candidates</h2>
+              <p className="section-subtitle">Select your preferred candidate to cast your vote</p>
+            </div>
+
+            <div className="candidate-grid">
+              {candidates.map((person) => (
+                <div key={person.id} className="candidate-card">
+                  <h2>{person.name}</h2>
+                  <p className="bio">{person.description}</p>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => handleVote(person.id)}
+                  >
+                    Vote for {person.name}
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="section">
+            <div className="section-header">
+              <h2 className="section-title">Quick Actions</h2>
+              <p className="section-subtitle">Navigate to other sections</p>
+            </div>
+
+            <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
+              <a href="/results" className="btn btn-secondary">
+                View Live Results
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
