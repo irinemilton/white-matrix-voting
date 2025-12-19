@@ -1,0 +1,166 @@
+/* Container & Layout */
+.container {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 20px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.title { color: #333; margin-bottom: 30px; }
+
+/* Candidate Cards */
+.candidate-grid {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.candidate-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.bio { color: #666; font-size: 0.9rem; margin: 15px 0; }
+
+/* Buttons & Links */
+.btn-vote {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.btn-vote:hover { background-color: #0056b3; }
+
+.link { color: #0077b5; text-decoration: none; font-weight: bold; }
+
+/* Results Table */
+.voter-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: white;
+}
+
+.voter-table th, .voter-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+.voter-table th { background-color: #f8f9fa; }
+
+/* Alerts */
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+
+/* Center the login card on the screen */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f2f5;
+}
+
+.auth-card {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.auth-title {
+  margin-bottom: 8px;
+  color: #1a1a1a;
+  font-size: 1.8rem;
+}
+
+.auth-subtitle {
+  color: #666;
+  margin-bottom: 30px;
+}
+
+/* Auth Buttons */
+.auth-button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.btn-auth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.1s, background 0.2s;
+  border: 1px solid transparent;
+}
+
+.btn-auth:active {
+  transform: scale(0.98);
+}
+
+.btn-google {
+  background-color: #ffffff;
+  color: #3c4043;
+  border-color: #dadce0;
+}
+
+.btn-google:hover {
+  background-color: #f8f9fa;
+}
+
+.btn-linkedin {
+  background-color: #0077b5;
+  color: white;
+}
+
+.btn-linkedin:hover {
+  background-color: #005e93;
+}
+
+.auth-footer {
+  margin-top: 25px;
+  color: #888;
+  font-size: 0.9rem;
+}
+
+
+
+.auth-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+}
+.btn-auth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
