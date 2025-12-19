@@ -8,7 +8,7 @@ export default function Voting() {
 
   // Fetch candidates on page load
   useEffect(() => {
-    fetch('http://localhost:5000/api/candidates')
+    fetch('http://localhost:5000/api/candidates', { credentials: 'include' })
       .then((res) => res.json())
       .then((data) => setCandidates(data))
       .catch((err) => console.error("Error fetching candidates:", err));

@@ -6,19 +6,20 @@ export default function Voting() {
   const [hasVoted, setHasVoted] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/candidates').then(r => r.json()).then(setCandidates);
+    fetch('http://localhost:5000/api/candidates', { credentials: 'include' }).then(r => r.json()).then(setCandidates);
   }, []);
 
   const handleVote = async (id) => {
     const res = await fetch('http://localhost:5000/api/vote', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify({ candidateId: id })
     });
     const data = await res.json();
     if (data.message) {
       setHasVoted(true);
-      fetch('http://localhost:5000/api/voters').then(r => r.json()).then(setVoters);
+      fetch('http://localhost:5000/api/voters', { credentials: 'include' }).then(r => r.json()).then(setVoters);
     } else {
       alert(data.error);
     }

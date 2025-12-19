@@ -83,7 +83,7 @@ app.post('/api/vote', async (req, res) => {
 app.get('/api/voters', async (req, res) => {
   try {
     const result = await db.query(`
-      SELECT users.display_name, users.linkedin_id 
+      SELECT users.display_name, users.linkedin_profile_url, users.google_id, users.linkedin_id
       FROM users 
       JOIN votes ON users.id = votes.user_id
     `);

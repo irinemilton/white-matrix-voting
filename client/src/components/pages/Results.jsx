@@ -7,12 +7,12 @@ export default function Results() {
   const [voters, setVoters] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/results')
+    fetch('http://localhost:5000/api/results', { credentials: 'include' })
       .then((res) => res.json())
       .then((data) => setResults(data))
       .catch((err) => console.error("Error fetching results:", err));
 
-    fetch('http://localhost:5000/api/voters')
+    fetch('http://localhost:5000/api/voters', { credentials: 'include' })
       .then((res) => res.json())
       .then((data) => setVoters(data))
       .catch((err) => console.error("Error fetching voters:", err));
@@ -45,6 +45,7 @@ export default function Results() {
               <tr>
                 <th>Name</th>
                 <th>Provider</th>
+                <th>Profile</th>
               </tr>
             </thead>
             <tbody>
@@ -55,11 +56,20 @@ export default function Results() {
                     <td>
                       {v.linkedin_id ? 'LinkedIn' : 'Google'}
                     </td>
+                    <td>
+                      {v.linkedin_profile_url ? (
+                        <a href={v.linkedin_profile_url} target="_blank" rel="noopener noreferrer" className="link">
+                          View Profile
+                        </a>
+                      ) : (
+                        'N/A'
+                      )}
+                    </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan="2">No votes recorded yet.</td>
+                  <td colSpan="3">No votes recorded yet.</td>
                 </tr>
               )}
             </tbody>

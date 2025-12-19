@@ -9,8 +9,14 @@ async function setupDatabase() {
         google_id VARCHAR(255) UNIQUE,
         linkedin_id VARCHAR(255) UNIQUE,
         display_name VARCHAR(255),
-        email VARCHAR(255)
+        email VARCHAR(255),
+        linkedin_profile_url VARCHAR(255)
       );
+    `);
+
+    // Add linkedin_profile_url column if it doesn't exist
+    await db.query(`
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS linkedin_profile_url VARCHAR(255);
     `);
 
     // Drop unique constraint on email if it exists
